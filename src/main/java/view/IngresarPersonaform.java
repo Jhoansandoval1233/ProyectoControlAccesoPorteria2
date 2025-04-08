@@ -14,7 +14,16 @@ public class IngresarPersonaform extends javax.swing.JFrame {
      * Creates new form IngresarPersonaform
      */
     public IngresarPersonaform() {
-        initComponents();
+        initComponents();  
+        agregarBorradoAlHacerClick(jTextFileIngresarNombre);
+        agregarBorradoAlHacerClick(jTextFileIngresarApellido);
+        agregarBorradoAlHacerClick(jTexttIngresarID);
+        agregarBorradoAlHacerClick(jTexttIngresarNumeroTelefonico);
+        agregarBorradoAlHacerClick(jTexttIngresarCorreo);
+        agregarBorradoAlHacerClick(jTextFieldTipoELemento);
+        agregarBorradoAlHacerClick(jTextFieldSerialElemento);
+        agregarBorradoAlHacerClick(jTextFieldTipoVehiculo);
+        agregarBorradoAlHacerClick(jTextFieldPlaca);
     }
 
     /**
@@ -32,15 +41,23 @@ public class IngresarPersonaform extends javax.swing.JFrame {
         jLabelIngresarPersona = new javax.swing.JLabel();
         jLabelNombreCompleto = new javax.swing.JLabel();
         jTextFileIngresarNombre = new javax.swing.JTextField();
+        jTextFileIngresarApellido = new javax.swing.JTextField();
         jLabelTipoDeDocumento = new javax.swing.JLabel();
-        jComboTiposDocumentos = new javax.swing.JComboBox<>();
-        jLabelNumeroID = new javax.swing.JLabel();
+        jComboTipoDeVisita = new javax.swing.JComboBox<>();
         jTexttIngresarID = new javax.swing.JTextField();
+        jLabelTelefono = new javax.swing.JLabel();
+        jTexttIngresarNumeroTelefonico = new javax.swing.JTextField();
+        jLabelCorreo = new javax.swing.JLabel();
+        jTexttIngresarCorreo = new javax.swing.JTextField();
+        jLabelTipoRol = new javax.swing.JLabel();
+        jComboTiposDocumentos1 = new javax.swing.JComboBox<>();
         jCheckBoxRegistrarElemento = new javax.swing.JCheckBox();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldTipoELemento = new javax.swing.JTextField();
+        jTextFieldSerialElemento = new javax.swing.JTextField();
         jCheckBoxReigistrarVehiculo = new javax.swing.JCheckBox();
-        jTextField3 = new javax.swing.JTextField();
+        jTextFieldTipoVehiculo = new javax.swing.JTextField();
+        jTextFieldPlaca = new javax.swing.JTextField();
+        jButtonRegistrar = new javax.swing.JButton();
         jLabelFondoTaladro = new javax.swing.JLabel();
 
         jLabel2.setText("jLabel2");
@@ -52,52 +69,98 @@ public class IngresarPersonaform extends javax.swing.JFrame {
 
         jLabelIngresarPersona.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabelIngresarPersona.setText("Ingresar Persona");
-        jPanel1.add(jLabelIngresarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, -1, -1));
+        jPanel1.add(jLabelIngresarPersona, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, -1, -1));
 
         jLabelNombreCompleto.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabelNombreCompleto.setText("Nombre Completo");
-        jPanel1.add(jLabelNombreCompleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, -1, -1));
+        jPanel1.add(jLabelNombreCompleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 70, -1, -1));
 
-        jTextFileIngresarNombre.setText("Apellidos y Nombres");
-        jPanel1.add(jTextFileIngresarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 100, 170, 30));
+        jTextFileIngresarNombre.setText("Ingrese nombres");
+        jTextFileIngresarNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFileIngresarNombreActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jTextFileIngresarNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 70, 170, 30));
+
+        jTextFileIngresarApellido.setText("Ingrese apellidos");
+        jTextFileIngresarApellido.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFileIngresarApellidoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jTextFileIngresarApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 170, 30));
 
         jLabelTipoDeDocumento.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabelTipoDeDocumento.setText("Tipo de documento ");
-        jPanel1.add(jLabelTipoDeDocumento, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, -1, -1));
+        jPanel1.add(jLabelTipoDeDocumento, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 120, -1, -1));
 
-        jComboTiposDocumentos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo de documento", "Cedula de ciudadania", "Pasaporte", "Tarjeta de Identidad" }));
-        jComboTiposDocumentos.addActionListener(new java.awt.event.ActionListener() {
+        jComboTipoDeVisita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo de visitante", "visitante", "Empleado", "Proveedor", "Aprendiz" }));
+        jComboTipoDeVisita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboTiposDocumentosActionPerformed(evt);
+                jComboTipoDeVisitaActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboTiposDocumentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 170, 170, 30));
+        jPanel1.add(jComboTipoDeVisita, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, 170, 30));
 
-        jLabelNumeroID.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabelNumeroID.setText("NumeroID");
-        jPanel1.add(jLabelNumeroID, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 240, -1, -1));
-
+        jTexttIngresarID.setText("Ingrese numero ID");
         jTexttIngresarID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTexttIngresarIDActionPerformed(evt);
             }
         });
-        jPanel1.add(jTexttIngresarID, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, 170, 30));
+        jPanel1.add(jTexttIngresarID, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 120, 170, 30));
+
+        jLabelTelefono.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabelTelefono.setText("Telefono/celular");
+        jPanel1.add(jLabelTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 150, -1));
+
+        jTexttIngresarNumeroTelefonico.setText("Ingrese numero telefonico");
+        jTexttIngresarNumeroTelefonico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTexttIngresarNumeroTelefonicoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jTexttIngresarNumeroTelefonico, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, 170, 30));
+
+        jLabelCorreo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabelCorreo.setText("Correo o gmail");
+        jPanel1.add(jLabelCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 170, 130, -1));
+
+        jTexttIngresarCorreo.setText("Ingrese correo");
+        jTexttIngresarCorreo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTexttIngresarCorreoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jTexttIngresarCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 170, 220, 30));
+
+        jLabelTipoRol.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabelTipoRol.setText("Tipo/rol");
+        jPanel1.add(jLabelTipoRol, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, 80, -1));
+
+        jComboTiposDocumentos1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo de documento", "Cedula de ciudadania", "Pasaporte", "Tarjeta de Identidad" }));
+        jComboTiposDocumentos1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboTiposDocumentos1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jComboTiposDocumentos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 120, 170, 30));
 
         jCheckBoxRegistrarElemento.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jCheckBoxRegistrarElemento.setText("Registrar elemento");
-        jPanel1.add(jCheckBoxRegistrarElemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 330, -1, -1));
+        jPanel1.add(jCheckBoxRegistrarElemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, -1, -1));
 
-        jTextField1.setText("Tipo de elemento");
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 370, 130, 30));
+        jTextFieldTipoELemento.setText("Tipo de elemento");
+        jPanel1.add(jTextFieldTipoELemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, 130, 30));
 
-        jTextField2.setText("Serial o ID");
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldSerialElemento.setText("Serial o ID");
+        jTextFieldSerialElemento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                jTextFieldSerialElementoActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 420, 130, 30));
+        jPanel1.add(jTextFieldSerialElemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 370, 130, 30));
 
         jCheckBoxReigistrarVehiculo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jCheckBoxReigistrarVehiculo.setText("Registrar vehiculo");
@@ -106,14 +169,22 @@ public class IngresarPersonaform extends javax.swing.JFrame {
                 jCheckBoxReigistrarVehiculoActionPerformed(evt);
             }
         });
-        jPanel1.add(jCheckBoxReigistrarVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 330, -1, -1));
+        jPanel1.add(jCheckBoxReigistrarVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 280, -1, -1));
 
-        jTextField3.setText("Placa");
-        jPanel1.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 420, 130, 30));
+        jTextFieldTipoVehiculo.setText("Tipo de vehiculo");
+        jPanel1.add(jTextFieldTipoVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 320, 130, 30));
+
+        jTextFieldPlaca.setText("Placa");
+        jPanel1.add(jTextFieldPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 370, 130, 30));
+
+        jButtonRegistrar.setBackground(new java.awt.Color(0, 204, 0));
+        jButtonRegistrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButtonRegistrar.setText("Registrar datos");
+        jPanel1.add(jButtonRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 420, 140, 40));
 
         jLabelFondoTaladro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/taladro.jpg"))); // NOI18N
         jLabelFondoTaladro.setText("jLabel1");
-        jPanel1.add(jLabelFondoTaladro, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 920, -1));
+        jPanel1.add(jLabelFondoTaladro, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 620));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -129,21 +200,41 @@ public class IngresarPersonaform extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboTiposDocumentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboTiposDocumentosActionPerformed
+    private void jComboTipoDeVisitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboTipoDeVisitaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboTiposDocumentosActionPerformed
+    }//GEN-LAST:event_jComboTipoDeVisitaActionPerformed
 
     private void jCheckBoxReigistrarVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxReigistrarVehiculoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBoxReigistrarVehiculoActionPerformed
 
+    private void jTexttIngresarNumeroTelefonicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTexttIngresarNumeroTelefonicoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTexttIngresarNumeroTelefonicoActionPerformed
+
+    private void jTextFieldSerialElementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSerialElementoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldSerialElementoActionPerformed
+
+    private void jTextFileIngresarApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFileIngresarApellidoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFileIngresarApellidoActionPerformed
+
+    private void jTextFileIngresarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFileIngresarNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFileIngresarNombreActionPerformed
+
+    private void jTexttIngresarCorreoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTexttIngresarCorreoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTexttIngresarCorreoActionPerformed
+
     private void jTexttIngresarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTexttIngresarIDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTexttIngresarIDActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void jComboTiposDocumentos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboTiposDocumentos1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_jComboTiposDocumentos1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,21 +270,42 @@ public class IngresarPersonaform extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonRegistrar;
     private javax.swing.JCheckBox jCheckBoxRegistrarElemento;
     private javax.swing.JCheckBox jCheckBoxReigistrarVehiculo;
-    private javax.swing.JComboBox<String> jComboTiposDocumentos;
+    private javax.swing.JComboBox<String> jComboTipoDeVisita;
+    private javax.swing.JComboBox<String> jComboTiposDocumentos1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabelCorreo;
     private javax.swing.JLabel jLabelFondoTaladro;
     private javax.swing.JLabel jLabelIngresarPersona;
     private javax.swing.JLabel jLabelNombreCompleto;
-    private javax.swing.JLabel jLabelNumeroID;
+    private javax.swing.JLabel jLabelTelefono;
     private javax.swing.JLabel jLabelTipoDeDocumento;
+    private javax.swing.JLabel jLabelTipoRol;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu jPopupMenu1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextFieldPlaca;
+    private javax.swing.JTextField jTextFieldSerialElemento;
+    private javax.swing.JTextField jTextFieldTipoELemento;
+    private javax.swing.JTextField jTextFieldTipoVehiculo;
+    private javax.swing.JTextField jTextFileIngresarApellido;
     private javax.swing.JTextField jTextFileIngresarNombre;
+    private javax.swing.JTextField jTexttIngresarCorreo;
     private javax.swing.JTextField jTexttIngresarID;
+    private javax.swing.JTextField jTexttIngresarNumeroTelefonico;
     // End of variables declaration//GEN-END:variables
+private void agregarBorradoAlHacerClick(javax.swing.JTextField campo) {
+    campo.addMouseListener(new java.awt.event.MouseAdapter() {
+        private boolean borrado = false;
+
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            if (!borrado) {
+                campo.setText("");
+                borrado = true;
+            }
+        }
+    });
+}
 }

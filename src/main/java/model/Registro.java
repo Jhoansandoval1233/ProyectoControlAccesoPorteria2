@@ -123,8 +123,8 @@ public class Registro {
                ", fechaHora=" + fechaHora +
                ", observaciones='" + observaciones + '\'' +
                ", tipoRegistro=" + tipoRegistro +  // Mostramos el tipo de acción (ENTRADA o SALIDA)
-               ", elemento=" + (elemento != null ? elemento.getNombre() : "N/A") +
-               ", vehiculo=" + (vehiculo != null ? vehiculo.getMarca() + " " + vehiculo.getModelo() : "N/A") +
+               ", elemento=" + (elemento != null ? elemento.getTipo() : "N/A") +
+               ", vehiculo=" + (vehiculo != null ? vehiculo.getTipo() + " " + vehiculo.getPlaca() : "N/A") +
                '}';
     }
 

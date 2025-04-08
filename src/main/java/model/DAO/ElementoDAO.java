@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Elemento;
 
+
 public class ElementoDAO {
     private final Connection connection;
 
@@ -26,46 +27,39 @@ public class ElementoDAO {
         }
     }
 
-    // Leer un Elemento a partir de su serial
-    public Elemento read(String serial) throws SQLException {
-        String query = "SELECT tipo, serial FROM elementos WHERE serial = ?";
+    // Leer un Elemento por ID
+    public Elemento obtenerElementoPorId(int id) {
+        String query = "SELECT id, tipo, serial FROM elementos WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, serial);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    String tipo = rs.getString("tipo");
-                    return new Elemento(tipo);
-                } else {
-                    return null;  // Si no se encuentra, devolver null
-                }
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new Elemento(
+                    rs.getString("tipo"));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
     // Actualizar un Elemento
     public void update(Elemento elemento) throws SQLException {
-        String query = "UPDATE elementos SET tipo = ? WHERE serial = ?";
+        String query = "UPDATE elementos SET tipo = ?, serial = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, elemento.getTipo());
             stmt.setString(2, elemento.getSerial());
+            stmt.setInt(3, elemento.getId());
             stmt.executeUpdate();
         }
     }
 
-    // Eliminar un Elemento
-    public void delete(String serial) throws SQLException {
-        String query = "DELETE FROM elementos WHERE serial = ?";
+    // Eliminar un Elemento por ID
+    public void delete(int id) throws SQLException {
+        String query = "DELETE FROM elementos WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, serial);
+            stmt.setInt(1, id);
             stmt.executeUpdate();
         }
-    }
-
-    public Elemento obtenerElementoPorId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    public void delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

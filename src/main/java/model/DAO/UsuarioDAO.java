@@ -15,7 +15,11 @@ import utilities.Conexion;
 
 
 public class UsuarioDAO {
+  private final Connection connection;
 
+    public UsuarioDAO(Connection connection) {
+        this.connection = connection;
+    }
     // Método para registrar un nuevo usuario
     public boolean registrarUsuario(Usuario usuario) {
         String sql = "INSERT INTO usuarios (nombres, apellidos, id, correo, password) VALUES (?, ?, ?, ?, ?)";
@@ -32,7 +36,21 @@ public class UsuarioDAO {
             return false;
         }
     }
-
+    
+        public boolean validarCredenciales(String correo, String contrasena) {
+        String sql = "SELECT * FROM acceso_porteria.usuario WHERE correo = ? AND contraseña = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, correo);
+            stmt.setString(2, contrasena);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next(); // Si encuentra un resultado, las credenciales son correctas
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
     // Obtener un usuario por ID
     public Usuario obtenerUsuario(int id) {
         String sql = "SELECT * FROM usuarios WHERE id = ?";

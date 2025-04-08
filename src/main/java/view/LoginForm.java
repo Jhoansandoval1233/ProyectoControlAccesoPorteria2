@@ -17,8 +17,31 @@ public class LoginForm extends javax.swing.JFrame {
      */
     public LoginForm() {
         initComponents();
+        jTextFieldIngresarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+        boolean borrado = false; // Esto va dentro del bloque del MouseAdapter
+
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            if (!borrado) {
+                jTextFieldIngresarUsuario.setText("");
+                borrado = true;
+            }
+        }
+    });
+           jPasswordIngresarContraseña.addMouseListener(new java.awt.event.MouseAdapter() {
+        boolean borradoContraseña = false;
+
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            if (!borradoContraseña) {
+                jPasswordIngresarContraseña.setText("");
+                borradoContraseña = true;
+            }
+        }
+    });
     }
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,7 +114,7 @@ public class LoginForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextFieldIngresarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldIngresarUsuarioActionPerformed
-        // TODO add your handling code here:
+         
     }//GEN-LAST:event_jTextFieldIngresarUsuarioActionPerformed
 
     private void jPasswordIngresarContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordIngresarContraseñaActionPerformed

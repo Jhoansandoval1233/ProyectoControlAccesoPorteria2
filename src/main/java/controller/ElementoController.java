@@ -11,13 +11,13 @@ import utilities.Conexion;
 public class ElementoController {
     private final ElementoDAO elementoDAO;
 
-    public ElementoController(Conexion conexion) {
-        this.elementoDAO = new ElementoDAO(conexion.getConnection()); // Corregido
+    public ElementoController() {
+        this.elementoDAO = new ElementoDAO(Conexion.getConnection());
     }
 
     // Método para agregar un nuevo elemento
-    public void agregarElemento(String nombre, String descripcion, String tipo) {
-        Elemento elemento = new Elemento(0, nombre, descripcion, tipo);
+    public void agregarElemento(String tipo, String serial, int id) {
+        Elemento elemento = new Elemento(tipo);
         try {
             elementoDAO.create(elemento);
             System.out.println("Elemento agregado correctamente.");
@@ -28,13 +28,13 @@ public class ElementoController {
     }
 
     // Método para obtener un elemento por ID
-    public Elemento obtenerElementoPorId(int id) throws SQLException {
+    public Elemento obtenerElementoPorId(int id) {
         return elementoDAO.obtenerElementoPorId(id);
     }
 
     // Método para actualizar un elemento
-    public void actualizarElemento(int id, String nombre, String descripcion, String tipo) {
-        Elemento elemento = new Elemento(id, nombre, descripcion, tipo);
+    public void actualizarElemento(String tipo, String serial, int id) {
+        Elemento elemento = new Elemento(tipo);
         try {
             elementoDAO.update(elemento);
             System.out.println("Elemento actualizado correctamente.");
@@ -45,7 +45,7 @@ public class ElementoController {
     }
 
     // Método para eliminar un elemento por ID
-    public void eliminarElemento(int id) {
+    public void eliminarElemento(int id) throws SQLException {
         elementoDAO.delete(id);
         System.out.println("Elemento eliminado correctamente.");
     }

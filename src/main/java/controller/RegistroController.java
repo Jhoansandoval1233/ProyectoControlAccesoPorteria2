@@ -29,13 +29,12 @@ public class RegistroController {
     // Método para insertar un nuevo registro
     public void insertarRegistro() {
         System.out.println("Ingrese los datos del nuevo registro:");
-
         System.out.print("ID de la persona: ");
         int personaId = scanner.nextInt();
 
         System.out.print("ID del usuario: ");
         int usuarioId = scanner.nextInt();
-        scanner.nextLine();  // Consumir la línea
+        scanner.nextLine();  // Consumir salto de línea
 
         System.out.print("Observaciones: ");
         String observaciones = scanner.nextLine();
@@ -49,15 +48,37 @@ public class RegistroController {
         System.out.print("ID del vehículo (0 si no aplica): ");
         int vehiculoId = scanner.nextInt();
 
-        // Creando objetos relacionados
+        // Crear objetos base
         Persona persona = new Persona(personaId);
         Usuario usuario = new Usuario(usuarioId);
-        Elemento elemento = elementoId > 0 ? new Elemento(elementoId, nombre, descripcion, elementoId) : null;
-        Vehiculo vehiculo = vehiculoId > 0 ? new Vehiculo(vehiculoId) : null;
 
-        // Creando registro
-        Registro nuevoRegistro = new Registro(0, persona, usuario, LocalDateTime.now(), observaciones, Registro.TipoAccion.valueOf(tipo), elemento, vehiculo);
+        // Crear elemento si aplica
+        Elemento elemento = null;
+        if (elementoId > 0) {
+            elemento = new Elemento("Tipo", "Serial", "id");
+            elemento.setId(elementoId);
+        }
 
+        // Crear vehículo si aplica
+        Vehiculo vehiculo = null;
+        if (vehiculoId > 0) {
+            vehiculo = new Vehiculo("Tipo", "Placa", "id");
+            vehiculo.setId(vehiculoId);
+        }
+
+        // Crear registro
+        Registro nuevoRegistro = new Registro(
+                0,
+                persona,
+                usuario,
+                LocalDateTime.now(),
+                observaciones,
+                Registro.TipoAccion.valueOf(tipo),
+                elemento,
+                vehiculo
+        );
+
+        // Insertar en la base de datos
         if (registroDAO.insertarRegistro(nuevoRegistro)) {
             System.out.println("Registro insertado con éxito.");
         } else {
@@ -69,9 +90,7 @@ public class RegistroController {
     public void consultarRegistro() {
         System.out.print("Ingrese el ID del registro a consultar: ");
         int id = scanner.nextInt();
-
         Registro registro = registroDAO.obtenerRegistroPorId(id);
-
         if (registro != null) {
             System.out.println("Registro encontrado: " + registro);
         } else {
@@ -83,7 +102,7 @@ public class RegistroController {
     public void actualizarRegistro() {
         System.out.print("Ingrese el ID del registro a actualizar: ");
         int id = scanner.nextInt();
-        scanner.nextLine(); // Consumir la línea
+        scanner.nextLine(); // Consumir salto de línea
 
         Registro registro = registroDAO.obtenerRegistroPorId(id);
         if (registro == null) {
@@ -111,7 +130,6 @@ public class RegistroController {
     public void eliminarRegistro() {
         System.out.print("Ingrese el ID del registro a eliminar: ");
         int id = scanner.nextInt();
-
         if (registroDAO.eliminarRegistro(id)) {
             System.out.println("Registro eliminado con éxito.");
         } else {
@@ -119,7 +137,7 @@ public class RegistroController {
         }
     }
 
-    // Método para mostrar el menú de operaciones
+    // Menú de operaciones
     public void mostrarMenu() {
         while (true) {
             System.out.println("\n------ Menú de Registro ------");
@@ -131,25 +149,16 @@ public class RegistroController {
             System.out.print("Seleccione una opción: ");
 
             int opcion = scanner.nextInt();
-
             switch (opcion) {
-                case 1:
-                    insertarRegistro();
-                    break;
-                case 2:
-                    consultarRegistro();
-                    break;
-                case 3:
-                    actualizarRegistro();
-                    break;
-                case 4:
-                    eliminarRegistro();
-                    break;
-                case 5:
+                case 1 -> insertarRegistro();
+                case 2 -> consultarRegistro();
+                case 3 -> actualizarRegistro();
+                case 4 -> eliminarRegistro();
+                case 5 -> {
                     System.out.println("Saliendo...");
                     return;
-                default:
-                    System.out.println("Opción inválida. Intente nuevamente.");
+                }
+                default -> System.out.println("Opción inválida. Intente nuevamente.");
             }
         }
     }

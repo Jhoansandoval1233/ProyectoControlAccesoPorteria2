@@ -9,25 +9,28 @@ package model;
  * @author sando
  */
 public class Elemento {
-    private String tipo;
+    private String tipoElemento;
     private String serial;
+    private int id;
 
-    public Elemento(int tipo, String nombre, String descripcion, String tipo1) {
-        this.tipo = tipo;
+    // Constructor con todos los campos
+    public Elemento(String tipo) {
+        this.tipoElemento = tipo;
         this.serial = serial;
+        this.id = id;
+    }
 
+    public Elemento(String tipo, String serial, String id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public Elemento(String elementoString) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-public String getTipo() {
-        return tipo;
+    // Getters y Setters
+    public String getTipo() {
+        return tipoElemento;
     }
 
     public void setTipo(String tipo) {
-        this.tipo = tipo;
+        this.tipoElemento = tipo;
     }
 
     public String getSerial() {
@@ -38,11 +41,20 @@ public String getTipo() {
         this.serial = serial;
     }
 
-    String getNombre() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public int getId() {
+        return id;
     }
 
-    public int getId() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Elemento{" +
+               "tipo='" + tipoElemento + '\'' +
+               ", serial='" + serial + '\'' +
+               ", id=" + id +
+               '}';
     }
 }
