@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.Elemento;
+import utilities.Conexion;
 
 
 public class ElementoDAO {
@@ -15,6 +16,29 @@ public class ElementoDAO {
 
     public ElementoDAO(Connection connection) {
         this.connection = connection;
+    }
+
+    public ElementoDAO() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+      public boolean guardarElemento(Elemento elemento) {
+        String sql = "INSERT INTO elementos (tipo, serial, persona_id) VALUES (?, ?, ?)";
+
+        try (Connection conn = Conexion.obtenerConexion();
+             PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+
+            stmt.setString(1, elemento.getTipo());
+            stmt.setString(2, elemento.getSerial());
+            stmt.setInt(3, elemento.getPersona().getId());
+
+            int filasAfectadas = stmt.executeUpdate();
+            return filasAfectadas > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Error al guardar el elemento: " + e.getMessage());
+            return false;
+        }
     }
 
     // Crear un nuevo Elemento

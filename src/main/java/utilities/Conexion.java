@@ -26,6 +26,10 @@ public class Conexion {
         throw new UnsupportedOperationException("Not supported yet."); 
     }
 
+    public static Connection obtenerConexion() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public PreparedStatement prepareStatement(String query) {
         throw new UnsupportedOperationException("Not supported yet."); 
     }

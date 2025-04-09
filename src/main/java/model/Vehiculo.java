@@ -30,6 +30,10 @@ public class Vehiculo {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    public Vehiculo(int i, String tipoVehiculo, String placa, Persona persona) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     // Getters y Setters
     public int getId() {
         return id;

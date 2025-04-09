@@ -9,28 +9,47 @@ package model;
  * @author sando
  */
 public class Elemento {
-    private String tipoElemento;
-    private String serial;
     private int id;
+    private String tipo;
+    private String serial;
+    private Persona persona;
 
-    // Constructor con todos los campos
+    public Elemento() {}
+
     public Elemento(String tipo) {
-        this.tipoElemento = tipo;
+        this.tipo = tipo;
         this.serial = serial;
+        this.persona = persona;
+    }
+
+   public Elemento(int id, String tipo, String serial, Persona persona) {
+    this.id = id;
+    this.tipo = tipo;
+    this.serial = serial;
+    this.persona = persona;
+}
+
+    public Elemento(String tipo, String serial, String id) {
+         this.tipo = tipo;
+         this.serial = serial;
+         
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Elemento(String tipo, String serial, String id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    // Getters y Setters
     public String getTipo() {
-        return tipoElemento;
+        return tipo;
     }
 
     public void setTipo(String tipo) {
-        this.tipoElemento = tipo;
+        this.tipo = tipo;
     }
 
     public String getSerial() {
@@ -41,20 +60,11 @@ public class Elemento {
         this.serial = serial;
     }
 
-    public int getId() {
-        return id;
+    public Persona getPersona() {
+        return persona;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "Elemento{" +
-               "tipo='" + tipoElemento + '\'' +
-               ", serial='" + serial + '\'' +
-               ", id=" + id +
-               '}';
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 }

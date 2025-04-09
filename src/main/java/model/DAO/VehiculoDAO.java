@@ -18,6 +18,10 @@ public class VehiculoDAO {
         this.connection = connection;
     }
 
+    public VehiculoDAO() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     // Crear un nuevo Vehículo
     public void create(Vehiculo vehiculo) throws SQLException {
         String query = "INSERT INTO vehiculo (tipo, placa) VALUES (?, ?)";
@@ -61,5 +65,9 @@ public class VehiculoDAO {
             stmt.setString(1, placa);
             stmt.executeUpdate();
         }
+    }
+
+    public void guardarVehiculo(Vehiculo vehiculo) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

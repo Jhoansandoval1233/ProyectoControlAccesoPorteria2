@@ -180,7 +180,7 @@ public class IngresarPersonaform extends javax.swing.JFrame {
         jButtonRegistrar.setBackground(new java.awt.Color(0, 204, 0));
         jButtonRegistrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButtonRegistrar.setText("Registrar datos");
-        jPanel1.add(jButtonRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 420, 140, 40));
+        jPanel1.add(jButtonRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 440, 140, 40));
 
         jLabelFondoTaladro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/taladro.jpg"))); // NOI18N
         jLabelFondoTaladro.setText("jLabel1");

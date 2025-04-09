@@ -4,16 +4,22 @@
  */
 package view;
 
+import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import model.DAO.ElementoDAO;
 import model.DAO.RegistroDAO;
+import model.DAO.VehiculoDAO;
+import model.Elemento;
 import model.Persona;
 import model.Registro;
 import model.Usuario;
+import model.Vehiculo;
 import utilities.Conexion;
 
 /**
@@ -24,12 +30,37 @@ public class RegistrosForm extends javax.swing.JFrame {
 
     private int intID;
     private Usuario usuarioActual;
+    private JTextField jTextFileIngresarNombre;
+    private JTextField jTextFileIngresarApellido;
+    private JTextField jTexttIngresarNumeroTelefonico;
+    private JTextField jTexttIngresarCorreo;
 
     /**
      * Creates new form Registros
      */
     public RegistrosForm() {
         initComponents();
+        
+        agregarBorradoAlHacerClick(jTextFileIngresarNombre);
+        agregarBorradoAlHacerClick(jTextFileIngresarApellido);
+        agregarBorradoAlHacerClick(jTexttIngresarID);
+        agregarBorradoAlHacerClick(jTexttIngresarNumeroTelefonico);
+        agregarBorradoAlHacerClick(jTexttIngresarCorreo);
+        agregarBorradoAlHacerClick(jTextFieldTipoELemento);
+        agregarBorradoAlHacerClick(jTextFieldSerialElemento);
+        agregarBorradoAlHacerClick(jTextFieldTipoVehiculo);
+        agregarBorradoAlHacerClick(jTextFieldPlaca);
+        
+        panelElemento.setVisible(false);    
+        panelVehiculo.setVisible(false);
+        
+// Agregar acción al checkbox para mostrar/ocultar el panel
+         jCheckBoxRegistrarElemento.addActionListener((java.awt.event.ActionEvent evt) -> {
+             panelElemento.setVisible(jCheckBoxRegistrarElemento.isSelected());
+        });
+          jCheckBoxRegistrarVehiculo.addActionListener((java.awt.event.ActionEvent evt) -> {
+              panelVehiculo.setVisible(jCheckBoxRegistrarVehiculo.isSelected());
+        });
     }
     // Si no necesitas sobreescribir este método, puedes dejarlo vacío, ya que JFrame ya tiene una implementación
     @Override
@@ -45,27 +76,38 @@ public class RegistrosForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanelElemento = new javax.swing.JPanel();
+        jPanelVehiculo = new javax.swing.JPanel();
+        jPanelRegistros = new javax.swing.JPanel();
         jLabelRegistros = new javax.swing.JLabel();
-        jLabelTipoDeDocumento = new javax.swing.JLabel();
+        jLabelTipoDocumento = new javax.swing.JLabel();
         jComboTiposDocumentos = new javax.swing.JComboBox<>();
         jLabelNumeroID = new javax.swing.JLabel();
         jTexttIngresarID = new javax.swing.JTextField();
+        jLabelTipoRegistro = new javax.swing.JLabel();
         jComboBoxEntradaSalida = new javax.swing.JComboBox<>();
+        jLabelObservaciones = new javax.swing.JLabel();
+        jLabelIngreseObservaciones = new javax.swing.JTextField();
+        jCheckBoxRegistrarElemento = new javax.swing.JCheckBox();
+        jCheckBoxReigistrarVehiculo = new javax.swing.JCheckBox();
         jButtonRegistrar = new javax.swing.JButton();
+        jTextFieldTipoELemento = new javax.swing.JTextField();
+        jTextFieldSerialElemento = new javax.swing.JTextField();
+        jTextFieldTipoVehiculo = new javax.swing.JTextField();
+        jTextFieldPlaca = new javax.swing.JTextField();
         jLabelFondoTaladro = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanelRegistros.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabelRegistros.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabelRegistros.setText("Registros de Acceso");
-        jPanel1.add(jLabelRegistros, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 0, -1, 130));
+        jPanelRegistros.add(jLabelRegistros, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 0, -1, 60));
 
-        jLabelTipoDeDocumento.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabelTipoDeDocumento.setText("Tipo de documento ");
-        jPanel1.add(jLabelTipoDeDocumento, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, -1, -1));
+        jLabelTipoDocumento.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabelTipoDocumento.setText("Tipo de documento ");
+        jPanelRegistros.add(jLabelTipoDocumento, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, -1, -1));
 
         jComboTiposDocumentos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tipo de documento", "Cedula de ciudadania", "Pasaporte", "Tarjeta de Identidad" }));
         jComboTiposDocumentos.addActionListener(new java.awt.event.ActionListener() {
@@ -73,18 +115,23 @@ public class RegistrosForm extends javax.swing.JFrame {
                 jComboTiposDocumentosActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboTiposDocumentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 170, 170, 30));
+        jPanelRegistros.add(jComboTiposDocumentos, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 70, 170, 30));
 
         jLabelNumeroID.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabelNumeroID.setText("NumeroID");
-        jPanel1.add(jLabelNumeroID, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 240, -1, -1));
+        jPanelRegistros.add(jLabelNumeroID, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, -1, -1));
 
+        jTexttIngresarID.setText("Ingrese ID");
         jTexttIngresarID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTexttIngresarIDActionPerformed(evt);
             }
         });
-        jPanel1.add(jTexttIngresarID, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 240, 170, 30));
+        jPanelRegistros.add(jTexttIngresarID, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 70, 170, 30));
+
+        jLabelTipoRegistro.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabelTipoRegistro.setText("Tipo de registro ");
+        jPanelRegistros.add(jLabelTipoRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, -1, -1));
 
         jComboBoxEntradaSalida.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione registro", "Entrada", "Salida" }));
         jComboBoxEntradaSalida.addActionListener(new java.awt.event.ActionListener() {
@@ -92,8 +139,39 @@ public class RegistrosForm extends javax.swing.JFrame {
                 jComboBoxEntradaSalidaActionPerformed(evt);
             }
         });
-        jPanel1.add(jComboBoxEntradaSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 300, 170, 30));
+        jPanelRegistros.add(jComboBoxEntradaSalida, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 140, 170, 30));
 
+        jLabelObservaciones.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabelObservaciones.setText("Observaciones");
+        jPanelRegistros.add(jLabelObservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 140, -1, -1));
+
+        jLabelIngreseObservaciones.setText("Obvservaciones...");
+        jLabelIngreseObservaciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jLabelIngreseObservacionesActionPerformed(evt);
+            }
+        });
+        jPanelRegistros.add(jLabelIngreseObservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 140, 170, 30));
+
+        jCheckBoxRegistrarElemento.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jCheckBoxRegistrarElemento.setText("Registrar elemento");
+        jCheckBoxRegistrarElemento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxRegistrarElementoActionPerformed(evt);
+            }
+        });
+        jPanelRegistros.add(jCheckBoxRegistrarElemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, -1, -1));
+
+        jCheckBoxReigistrarVehiculo.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jCheckBoxReigistrarVehiculo.setText("Registrar vehiculo");
+        jCheckBoxReigistrarVehiculo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxReigistrarVehiculoActionPerformed(evt);
+            }
+        });
+        jPanelRegistros.add(jCheckBoxReigistrarVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 190, -1, -1));
+
+        jButtonRegistrar.setBackground(new java.awt.Color(0, 204, 0));
         jButtonRegistrar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButtonRegistrar.setText("Registrar");
         jButtonRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -101,21 +179,73 @@ public class RegistrosForm extends javax.swing.JFrame {
                 jButtonRegistrarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 370, 130, 40));
+        jPanelRegistros.add(jButtonRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 370, 130, 40));
+
+        jTextFieldTipoELemento.setText("Tipo de elemento");
+        jPanelRegistros.add(jTextFieldTipoELemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 230, 130, 30));
+
+        jTextFieldSerialElemento.setText("Serial o ID");
+        jTextFieldSerialElemento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldSerialElementoActionPerformed(evt);
+            }
+        });
+        jPanelRegistros.add(jTextFieldSerialElemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 280, 130, 30));
+
+        jTextFieldTipoVehiculo.setText("Tipo de vehiculo");
+        jPanelRegistros.add(jTextFieldTipoVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 230, 130, 30));
+
+        jTextFieldPlaca.setText("Placa");
+        jTextFieldPlaca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPlacaActionPerformed(evt);
+            }
+        });
+        jPanelRegistros.add(jTextFieldPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 280, 130, 30));
 
         jLabelFondoTaladro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/taladro.jpg"))); // NOI18N
         jLabelFondoTaladro.setText("jLabel1");
-        jPanel1.add(jLabelFondoTaladro, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 610));
+        jPanelRegistros.add(jLabelFondoTaladro, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 860, 630));
+
+        javax.swing.GroupLayout jPanelVehiculoLayout = new javax.swing.GroupLayout(jPanelVehiculo);
+        jPanelVehiculo.setLayout(jPanelVehiculoLayout);
+        jPanelVehiculoLayout.setHorizontalGroup(
+            jPanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelVehiculoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanelRegistros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanelVehiculoLayout.setVerticalGroup(
+            jPanelVehiculoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelVehiculoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanelRegistros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanelElementoLayout = new javax.swing.GroupLayout(jPanelElemento);
+        jPanelElemento.setLayout(jPanelElementoLayout);
+        jPanelElementoLayout.setHorizontalGroup(
+            jPanelElementoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanelVehiculo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanelElementoLayout.setVerticalGroup(
+            jPanelElementoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelElementoLayout.createSequentialGroup()
+                .addComponent(jPanelVehiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelElemento, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanelElemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -141,12 +271,12 @@ public class RegistrosForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboTiposDocumentosActionPerformed
 
-    private void jTexttIngresarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTexttIngresarIDActionPerformed
+    private void jLabelIngreseObservacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jLabelIngreseObservacionesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTexttIngresarIDActionPerformed
+    }//GEN-LAST:event_jLabelIngreseObservacionesActionPerformed
 
     private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarActionPerformed
-              String tipoDocumento = jComboTiposDocumentos.getSelectedItem().toString();
+    String tipoDocumento = jComboTiposDocumentos.getSelectedItem().toString();
     String numeroID = jTexttIngresarID.getText();
     String tipoRegistro = jComboBoxEntradaSalida.getSelectedItem().toString();
 
@@ -176,8 +306,54 @@ public class RegistrosForm extends javax.swing.JFrame {
     } else {
         JOptionPane.showMessageDialog(this, "Error al guardar el registro.");
     }
+    
+    // Si está marcado el checkbox de elemento
+Elemento elemento = null;
+if (jCheckBoxRegistrarElemento.isSelected()) {
+    String tipoElemento = jTextFieldTipoELemento.getText().trim();
+    String serialElemento = jTextFieldSerialElemento.getText().trim();
+    if (!tipoElemento.isEmpty() && !serialElemento.isEmpty()) {
+        elemento = new Elemento(0, tipoElemento, serialElemento, persona); // Asumiendo que tienes un constructor así
+        ElementoDAO elementoDAO = new ElementoDAO();
+        elementoDAO.guardarElemento(elemento);
+        nuevoRegistro.setElemento(elemento);
+    }
+}
+
+// Si está marcado el checkbox de vehículo
+    Vehiculo vehiculo = null;
+      if (jCheckBoxReigistrarVehiculo.isSelected()) {
+         String tipoVehiculo = jTextFieldTipoVehiculo.getText().trim();
+         String placa = jTextFieldPlaca.getText().trim();
+      if (!tipoVehiculo.isEmpty() && !placa.isEmpty()) {
+          vehiculo = new Vehiculo(0, tipoVehiculo, placa, persona);
+          VehiculoDAO vehiculoDAO = new VehiculoDAO();
+          vehiculoDAO.guardarVehiculo(vehiculo);
+          nuevoRegistro.setVehiculo(vehiculo);
+    }
+}
 
     }//GEN-LAST:event_jButtonRegistrarActionPerformed
+
+    private void jCheckBoxReigistrarVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxReigistrarVehiculoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxReigistrarVehiculoActionPerformed
+
+    private void jTexttIngresarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTexttIngresarIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTexttIngresarIDActionPerformed
+
+    private void jTextFieldSerialElementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldSerialElementoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldSerialElementoActionPerformed
+
+    private void jTextFieldPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPlacaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPlacaActionPerformed
+
+    private void jCheckBoxRegistrarElementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxRegistrarElementoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBoxRegistrarElementoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -222,13 +398,24 @@ public class RegistrosForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonRegistrar;
+    private javax.swing.JCheckBox jCheckBoxRegistrarElemento;
+    private javax.swing.JCheckBox jCheckBoxReigistrarVehiculo;
     private javax.swing.JComboBox<String> jComboBoxEntradaSalida;
     private javax.swing.JComboBox<String> jComboTiposDocumentos;
     private javax.swing.JLabel jLabelFondoTaladro;
+    private javax.swing.JTextField jLabelIngreseObservaciones;
     private javax.swing.JLabel jLabelNumeroID;
+    private javax.swing.JLabel jLabelObservaciones;
     private javax.swing.JLabel jLabelRegistros;
-    private javax.swing.JLabel jLabelTipoDeDocumento;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabelTipoDocumento;
+    private javax.swing.JLabel jLabelTipoRegistro;
+    private javax.swing.JPanel jPanelElemento;
+    private javax.swing.JPanel jPanelRegistros;
+    private javax.swing.JPanel jPanelVehiculo;
+    private javax.swing.JTextField jTextFieldPlaca;
+    private javax.swing.JTextField jTextFieldSerialElemento;
+    private javax.swing.JTextField jTextFieldTipoELemento;
+    private javax.swing.JTextField jTextFieldTipoVehiculo;
     private javax.swing.JTextField jTexttIngresarID;
     // End of variables declaration//GEN-END:variables
 
@@ -257,5 +444,53 @@ public class RegistrosForm extends javax.swing.JFrame {
 }
     private Usuario obtenerUsuarioActual() {
            return usuarioActual; 
+    }
+    
+    private void agregarBorradoAlHacerClick(javax.swing.JTextField campo) {
+    campo.addMouseListener(new java.awt.event.MouseAdapter() {
+        private boolean borrado = false;
+
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+            if (!borrado) {
+                campo.setText("");
+                borrado = true;
+            }
+        }
+    });
+}
+
+    private static class panelElemento {
+
+        private static void setVisible(boolean b) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        public panelElemento() {
+        }
+    }
+
+    private static class panelVehiculo {
+
+        private static void setVisible(boolean b) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        public panelVehiculo() {
+        }
+    }
+
+    private static class jCheckBoxRegistrarVehiculo {
+
+        private static void addActionListener(ActionListener actionListener) {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        private static boolean isSelected() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        public jCheckBoxRegistrarVehiculo() {
+        }
     }
 }
