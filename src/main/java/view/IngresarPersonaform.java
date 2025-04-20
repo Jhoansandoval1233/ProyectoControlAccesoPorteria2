@@ -4,6 +4,9 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
+import model.Persona;
+
 /**
  *
  * @author sando
@@ -15,6 +18,11 @@ public class IngresarPersonaform extends javax.swing.JFrame {
      */
     public IngresarPersonaform() {
         initComponents();  
+        jTextFieldTipoELemento.setVisible(false);
+        jTextFieldSerialElemento.setVisible(false);
+        jTextFieldTipoVehiculo.setVisible(false);
+        jTextFieldPlaca.setVisible(false);
+        
         agregarBorradoAlHacerClick(jTextFileIngresarNombre);
         agregarBorradoAlHacerClick(jTextFileIngresarApellido);
         agregarBorradoAlHacerClick(jTexttIngresarID);
@@ -24,7 +32,110 @@ public class IngresarPersonaform extends javax.swing.JFrame {
         agregarBorradoAlHacerClick(jTextFieldSerialElemento);
         agregarBorradoAlHacerClick(jTextFieldTipoVehiculo);
         agregarBorradoAlHacerClick(jTextFieldPlaca);
+        
+      jCheckBoxRegistrarElemento.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+      jCheckBoxRegistrarElementoActionPerformed(evt);
+      
+      
     }
+      private boolean validarCampos() {
+    String nombre = jTextFileIngresarNombre.getText().trim();
+    String apellido = jTextFileIngresarApellido.getText().trim();
+    String tipoDocumento = (String) jComboTiposDocumentos1.getSelectedItem();
+    String id = jTexttIngresarID.getText().trim();
+    String telefono = jTexttIngresarNumeroTelefonico.getText().trim();
+    String correo = jTexttIngresarCorreo.getText().trim();
+    String tipoVisita = (String) jComboTipoDeVisita.getSelectedItem();
+
+    if (nombre.isEmpty() || nombre.equals("Ingrese nombres")) {
+        mostrarMensaje("Ingrese un nombre válido");
+        return false;
+    }
+    if (apellido.isEmpty() || apellido.equals("Ingrese apellidos")) {
+        mostrarMensaje("Ingrese un apellido válido");
+        return false;
+    }
+    if (tipoDocumento.equals("Tipo de documento")) {
+        mostrarMensaje("Seleccione un tipo de documento");
+        return false;
+    }
+    if (!id.matches("\\d+")) {
+        mostrarMensaje("El número de ID debe ser numérico");
+        return false;
+    }
+    if (!telefono.matches("\\d{7,10}")) {
+        mostrarMensaje("Ingrese un número telefónico válido (7 a 10 dígitos)");
+        return false;
+    }
+    if (!correo.matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+        mostrarMensaje("Ingrese un correo electrónico válido");
+        return false;
+    }
+    if (tipoVisita.equals("Tipo de visitante")) {
+        mostrarMensaje("Seleccione un tipo/rol válido");
+        return false;
+    }
+
+    if (jCheckBoxRegistrarElemento.isSelected()) {
+        String tipoElemento = jTextFieldTipoELemento.getText().trim();
+        String serialElemento = jTextFieldSerialElemento.getText().trim();
+        if (tipoElemento.isEmpty() || serialElemento.isEmpty()) {
+            mostrarMensaje("Complete los campos del elemento");
+            return false;
+        }
+    }
+
+    if (jCheckBoxReigistrarVehiculo.isSelected()) {
+        String tipoVehiculo = jTextFieldTipoVehiculo.getText().trim();
+        String placa = jTextFieldPlaca.getText().trim();
+        if (tipoVehiculo.isEmpty() || placa.isEmpty()) {
+            mostrarMensaje("Complete los campos del vehículo");
+            return false;
+        }
+    }
+
+    return true;
+}
+
+        });
+    }
+    
+        private void mostrarMensaje(String mensaje) {
+        javax.swing.JOptionPane.showMessageDialog(this, mensaje, "Validación", javax.swing.JOptionPane.WARNING_MESSAGE);
+    }
+        
+       private void registrarPersona() {
+    String nombre = jTextFileIngresarNombre.getText().trim();
+    String apellido = jTextFileIngresarApellido.getText().trim();
+    String tipoDocumento = (String) jComboTiposDocumentos1.getSelectedItem();
+    String idTexto = jTexttIngresarID.getText().trim();
+    String telefono = jTexttIngresarNumeroTelefonico.getText().trim();
+    String correo = jTexttIngresarCorreo.getText().trim();
+    String tipoVisita = (String) jComboTipoDeVisita.getSelectedItem();
+
+    // Validar y convertir ID a entero
+    int id;
+    try {
+        id = Integer.parseInt(idTexto);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "El ID debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Construir el nombre completo
+    String nombreCompleto = nombre + " " + apellido;
+
+    // Crear la persona con el constructor correcto
+    Persona persona = new Persona(nombreCompleto, tipoDocumento, id, tipoVisita, telefono, correo);
+
+    // Aquí deberías guardar la persona en la base de datos, por ejemplo:
+    // personaDAO.guardar(persona);
+
+    // Mensaje de éxito
+    JOptionPane.showMessageDialog(this, "Persona registrada correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+}
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -149,6 +260,11 @@ public class IngresarPersonaform extends javax.swing.JFrame {
 
         jCheckBoxRegistrarElemento.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jCheckBoxRegistrarElemento.setText("Registrar elemento");
+        jCheckBoxRegistrarElemento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxRegistrarElementoActionPerformed(evt);
+            }
+        });
         jPanel1.add(jCheckBoxRegistrarElemento, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, -1, -1));
 
         jTextFieldTipoELemento.setText("Tipo de elemento");
@@ -180,6 +296,11 @@ public class IngresarPersonaform extends javax.swing.JFrame {
         jButtonRegistrar.setBackground(new java.awt.Color(0, 204, 0));
         jButtonRegistrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButtonRegistrar.setText("Registrar datos");
+        jButtonRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegistrarActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButtonRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 440, 140, 40));
 
         jLabelFondoTaladro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/taladro.jpg"))); // NOI18N
@@ -205,7 +326,9 @@ public class IngresarPersonaform extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboTipoDeVisitaActionPerformed
 
     private void jCheckBoxReigistrarVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxReigistrarVehiculoActionPerformed
-        // TODO add your handling code here:
+          boolean seleccionado = jCheckBoxReigistrarVehiculo.isSelected();
+          jTextFieldTipoVehiculo.setVisible(seleccionado);
+          jTextFieldPlaca.setVisible(seleccionado);
     }//GEN-LAST:event_jCheckBoxReigistrarVehiculoActionPerformed
 
     private void jTexttIngresarNumeroTelefonicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTexttIngresarNumeroTelefonicoActionPerformed
@@ -235,6 +358,18 @@ public class IngresarPersonaform extends javax.swing.JFrame {
     private void jComboTiposDocumentos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboTiposDocumentos1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboTiposDocumentos1ActionPerformed
+
+    private void jCheckBoxRegistrarElementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxRegistrarElementoActionPerformed
+           boolean seleccionado = jCheckBoxRegistrarElemento.isSelected();
+           jTextFieldTipoELemento.setVisible(seleccionado);
+           jTextFieldSerialElemento.setVisible(seleccionado);
+    }//GEN-LAST:event_jCheckBoxRegistrarElementoActionPerformed
+
+    private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarActionPerformed
+          if (validarCampos()) {
+        registrarPersona(); // o el método que estés usando para guardar
+    }
+    }//GEN-LAST:event_jButtonRegistrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -308,4 +443,28 @@ private void agregarBorradoAlHacerClick(javax.swing.JTextField campo) {
         }
     });
 }
+
+    private boolean validarCampos() {
+           if (jTextFileIngresarNombre.getText().trim().isEmpty()
+        || jTextFileIngresarApellido.getText().trim().isEmpty()
+        || jTexttIngresarID.getText().trim().isEmpty()
+        || jTexttIngresarNumeroTelefonico.getText().trim().isEmpty()
+        || jTexttIngresarCorreo.getText().trim().isEmpty()
+        || jComboTiposDocumentos1.getSelectedItem() == null
+        || jComboTipoDeVisita.getSelectedItem() == null) {
+
+        JOptionPane.showMessageDialog(this, "Todos los campos deben estar completos", "Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    try {
+        Integer.parseInt(jTexttIngresarID.getText().trim());
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "El campo ID debe ser un número", "Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+
+    return true;
+}
+   
 }

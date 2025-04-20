@@ -70,4 +70,22 @@ public class VehiculoDAO {
     public void guardarVehiculo(Vehiculo vehiculo) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    Vehiculo obtenerVehiculoPorId(int id) {
+                String sql = "SELECT * FROM vehiculos WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new Vehiculo(
+                    rs.getString("tipo"),
+                    rs.getString("placa"),
+                    rs.getInt("id")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Si no se encuentra o hay error
+    }
 }

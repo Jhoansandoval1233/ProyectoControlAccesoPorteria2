@@ -4,11 +4,9 @@
  */
 package view;
 
-/**
- *
- * @author sando
- */
+
 public class Lobby extends javax.swing.JFrame {
+    
 
     /**
      * Creates new form Lobby

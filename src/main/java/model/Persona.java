@@ -12,29 +12,60 @@ public class Persona {
     private String nombreCompleto;
     private String tipoId;
     private int id;
+    private String cargo;
+    private String telefono;
+    private String correo;
     private Elemento elemento; 
     private Vehiculo vehiculo; 
 
-    public Persona(int id) {
+    // Constructor principal
+    public Persona(String nombreCompleto, String tipoId, int id, String cargo, String telefono, String correo) {
         this.nombreCompleto = nombreCompleto;
         this.tipoId = tipoId;
         this.id = id;
-        this.elemento = elemento;
-        this.vehiculo = vehiculo;
+        this.cargo = cargo;
+        this.telefono = telefono;
+        this.correo = correo;
     }
 
-    public Persona(String nombre_Ejemplo, String dni, int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    // Constructor simplificado con nombre y ID
+    public Persona(String nombreCompleto, int id) {
+        this.nombreCompleto = nombreCompleto;
+        this.id = id;
     }
 
-    public Persona(String string, String string0, int aInt, String string1) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    // Constructor alternativo
+    public Persona(String nombreCompleto, String tipoId, int id) {
+        this.nombreCompleto = nombreCompleto;
+        this.tipoId = tipoId;
+        this.id = id;
     }
 
+    // Constructor con orden diferente
     public Persona(int id, String nombreCompleto, String tipoId) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.id = id;
+        this.nombreCompleto = nombreCompleto;
+        this.tipoId = tipoId;
     }
 
+    // Constructor que copia otra persona pero cambia nombre e id
+    public Persona(Persona persona, String nuevoNombre, int nuevoId) {
+        this.nombreCompleto = nuevoNombre;
+        this.id = nuevoId;
+        this.tipoId = persona.tipoId;
+        this.cargo = persona.cargo;
+        this.telefono = persona.telefono;
+        this.correo = persona.correo;
+        this.elemento = persona.elemento;
+        this.vehiculo = persona.vehiculo;
+    }
+
+ 
+    public Persona(int id) {
+    this.id = id;
+}
+
+    // Getters y Setters
     public String getNombreCompleto() {
         return nombreCompleto;
     }
@@ -59,6 +90,30 @@ public class Persona {
         this.id = id;
     }
 
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
     public Elemento getElemento() {
         return elemento;
     }
@@ -74,6 +129,4 @@ public class Persona {
     public void setVehiculo(Vehiculo vehiculo) {
         this.vehiculo = vehiculo;
     }
-
-  
 }

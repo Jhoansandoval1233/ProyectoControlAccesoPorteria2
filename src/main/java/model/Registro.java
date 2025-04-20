@@ -21,8 +21,7 @@ public class Registro {
     private Vehiculo vehiculo;
 
     // Constructor
-    public Registro(int id, Persona persona, Usuario usuario, LocalDateTime fechaHora, 
-                    String observaciones, TipoAccion tipoRegistro, Elemento elemento, Vehiculo vehiculo) {
+    public Registro(int id, Persona persona, Usuario usuario, LocalDateTime fechaHora, String observaciones, TipoAccion tipoRegistro, Elemento elemento, Vehiculo vehiculo) {
         this.id = id;
         this.persona = persona;
         this.usuario = usuario;
@@ -32,10 +31,32 @@ public class Registro {
         this.elemento = elemento;
         this.vehiculo = vehiculo;
     }
-
-    Registro(int id, Persona persona, Usuario usuario, LocalDateTime fechaHora, String observaciones, String tipoRegistro, Elemento elemento, Vehiculo vehiculo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+ // Constructor para casos de texto (por ejemplo, cuando necesitas insertar desde una interfaz de usuario)
+    public Registro(String string, String string0, String string1, String pedro_Perez, String aprendiz, String sn) {
+        CharSequence fecha = null;
+                // Aquí deberías hacer la conversión de los valores string a los tipos correspondientes (por ejemplo, LocalDateTime)
+        this.fechaHora = LocalDateTime.parse(fecha);  // Suponiendo que el formato es "yyyy-MM-dd'T'HH:mm:ss"
+        this.persona = new Persona(persona, "12345678", id);  // O como corresponda para crear la persona
+        this.usuario = new Usuario("user_example");  // Similarmente, crea el usuario
+        this.observaciones = observaciones;
+        Object entrada = null;
+        this.tipoRegistro = (entrada != null) ? TipoAccion.ENTRADA : TipoAccion.SALIDA;
+        this.elemento = null;  // Podrías agregar lógica si también se registra un elemento
+        this.vehiculo = null;  // Similarmente, añade lógica para el vehículo
     }
+
+     public Registro(int id, Persona persona, Usuario usuario, LocalDateTime fechaHora, 
+       String observaciones, String tipoRegistro, Elemento elemento, Vehiculo vehiculo) {
+       this.id = id;
+       this.persona = persona;
+       this.usuario = usuario;
+       this.fechaHora = fechaHora;
+       this.observaciones = observaciones;
+       //this.tipoRegistro = tipoRegistro;
+       this.elemento = elemento;
+       this.vehiculo = vehiculo;
+}
+
 
     // Getters y Setters
     public int getId() {
@@ -128,8 +149,46 @@ public class Registro {
                '}';
     }
 
+     // Métodos para la tabla de consulta, devuelven los datos que necesitas mostrar
+    public Object getFecha() {
+        return this.fechaHora.toLocalDate(); // Devuelve solo la fecha
+    }
+
+    public Object getEntrada() {
+        return this.tipoRegistro == TipoAccion.ENTRADA ? this.fechaHora.toLocalTime() : null;  // Solo si es entrada
+    }
+
+    public Object getSalida() {
+        return this.tipoRegistro == TipoAccion.SALIDA ? this.fechaHora.toLocalTime() : null;  // Solo si es salida
+    }
+
+    public Object getCargo() {
+        return this.persona != null ? this.persona.getCargo() : "N/A";  // Devuelve el cargo de la persona
+    }
+
     void setTipoRegistro(String nuevoTipo) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (nuevoTipo == null || nuevoTipo.trim().isEmpty()) {
+            throw new IllegalArgumentException("El tipo de registro no puede ser vacío");
+        }
+        try {
+            this.tipoRegistro = TipoAccion.valueOf(nuevoTipo.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Tipo de registro desconocido: " + nuevoTipo, e);
+        }
+    }
+
+    public Object getHoraEntrada() {
+        if (this.tipoRegistro == TipoAccion.ENTRADA && this.fechaHora != null) {
+            return this.fechaHora.toLocalTime();
+        }
+        return null;
+    }
+
+    public Object getHoraSalida() {
+        if (this.tipoRegistro == TipoAccion.SALIDA && this.fechaHora != null) {
+            return this.fechaHora.toLocalTime();
+        }
+        return null;
     }
 
     // Enum 

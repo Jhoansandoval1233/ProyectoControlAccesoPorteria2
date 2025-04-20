@@ -8,13 +8,30 @@ package view;
  *
  * @author sando
  */
-public class ConsultasForm extends javax.swing.JFrame {
+import utilities.Conexion;
+import model.DAO.RegistroDAO;
+import model.Registro;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.util.List;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
+public class ConsultasForm extends javax.swing.JFrame {
+    private RegistroDAO registroDAO;
     /**
      * Creates new form ConsultasForm
      */
     public ConsultasForm() {
         initComponents();
+         Connection conn = Conexion.getConnection();
+         registroDAO = new RegistroDAO(Conexion.getConnection());
     }
 
     /**
@@ -32,7 +49,7 @@ public class ConsultasForm extends javax.swing.JFrame {
         jButtonBuscar = new javax.swing.JButton();
         jButtonExportar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableConsultasRegistros = new javax.swing.JTable();
         jLabelFondoTaladro = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -60,7 +77,7 @@ public class ConsultasForm extends javax.swing.JFrame {
                 jButtonBuscarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 50, 140, 40));
+        jPanel1.add(jButtonBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 60, 140, 40));
 
         jButtonExportar.setBackground(new java.awt.Color(0, 204, 0));
         jButtonExportar.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -70,9 +87,9 @@ public class ConsultasForm extends javax.swing.JFrame {
                 jButtonExportarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonExportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 50, 140, 40));
+        jPanel1.add(jButtonExportar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 60, 140, 40));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableConsultasRegistros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"28/03/2025", "06:00", "14:00", "Pedro Perez", "Aprendiz", null},
                 {"28/03/2025", "06:00", "14:00", "Pablo Rodriguez", "Visitante", "S/N"},
@@ -89,7 +106,7 @@ public class ConsultasForm extends javax.swing.JFrame {
                 "Fecha ", "Entrada", "Salida", "Persona", "Cargo", "Observaciones"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableConsultasRegistros);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 110, 760, -1));
 
@@ -116,11 +133,86 @@ public class ConsultasForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldBuscarPorIDActionPerformed
 
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
-    
+        try {
+        String text = jTextFieldBuscarPorID.getText().trim();
+        if (text.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor ingresa un ID.");
+            return;
+        }
+        int idPersona = Integer.parseInt(text);
+        List<Registro> registros = registroDAO.obtenerRegistrosPorId(idPersona);
+
+        DefaultTableModel model = (DefaultTableModel) jTableConsultasRegistros.getModel();
+        model.setRowCount(0);
+
+        for (Registro reg : registros) {
+            Object[] fila = {
+                reg.getFecha(), 
+                reg.getHoraEntrada(), 
+                reg.getHoraSalida(),
+                reg.getPersona().getNombreCompleto(),
+                reg.getPersona().getCargo(),
+                reg.getObservaciones()
+            };
+            model.addRow(fila);
+        }
+
+        if (registros.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontraron registros para el ID especificado.");
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Por favor ingresa un ID válido.");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al buscar registros: " + e.getMessage());
+        e.printStackTrace();
+    }
+
     }//GEN-LAST:event_jButtonBuscarActionPerformed
 
     private void jButtonExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExportarActionPerformed
-        // TODO add your handling code here:
+       JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Guardar como...");
+    
+    // Filtro para archivos .csv
+    FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos CSV", "csv");
+    fileChooser.setFileFilter(filter);
+
+    int seleccion = fileChooser.showSaveDialog(this);
+    
+    if (seleccion == JFileChooser.APPROVE_OPTION) {
+        File archivo = fileChooser.getSelectedFile();
+        // Asegura que el archivo tenga extensión .csv
+        if (!archivo.getName().toLowerCase().endsWith(".csv")) {
+            archivo = new File(archivo.getAbsolutePath() + ".csv");
+        }
+
+        try (PrintWriter pw = new PrintWriter(new FileWriter(archivo))) {
+            DefaultTableModel model = (DefaultTableModel) jTableConsultasRegistros.getModel();
+            int columnas = model.getColumnCount();
+
+            // Escribe encabezados
+            for (int i = 0; i < columnas; i++) {
+                pw.print(model.getColumnName(i));
+                if (i != columnas - 1) pw.print(",");
+            }
+            pw.println();
+
+            // Escribe filas
+            for (int fila = 0; fila < model.getRowCount(); fila++) {
+                for (int col = 0; col < columnas; col++) {
+                    Object valor = model.getValueAt(fila, col);
+                    pw.print(valor != null ? valor.toString() : "");
+                    if (col != columnas - 1) pw.print(",");
+                }
+                pw.println();
+            }
+
+            JOptionPane.showMessageDialog(this, "Archivo exportado correctamente.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al exportar: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
     }//GEN-LAST:event_jButtonExportarActionPerformed
 
     /**
@@ -163,7 +255,8 @@ public class ConsultasForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelFondoTaladro;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableConsultasRegistros;
     private javax.swing.JTextField jTextFieldBuscarPorID;
     // End of variables declaration//GEN-END:variables
+
 }

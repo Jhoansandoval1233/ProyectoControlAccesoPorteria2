@@ -37,7 +37,12 @@ public class UsuarioDAO {
         }
     }
     
+    
         public boolean validarCredenciales(String correo, String contrasena) {
+                // Credenciales de prueba
+    if ("admin@sena.com".equals(correo) && "123".equals(contrasena)) {
+        return true; // Credenciales temporales válidas
+    }
         String sql = "SELECT * FROM acceso_porteria.usuario WHERE correo = ? AND contraseña = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, correo);
@@ -124,5 +129,9 @@ public class UsuarioDAO {
         } catch (SQLException e) {
             return false;
         }
+    }
+
+    Usuario obtenerUsuarioPorId(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

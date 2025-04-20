@@ -16,6 +16,9 @@ import java.util.Optional;
 
 public class ControlAcceso {
     private final List<Registro> registros;
+    private int idPersona;
+    private Timestamp fechaHora;
+    private String tipoAcceso;
 
     public ControlAcceso(int aInt, int aInt1, Timestamp timestamp, String string) {
         this.registros = new ArrayList<>();
@@ -94,16 +97,16 @@ public class ControlAcceso {
     public boolean eliminarRegistro(int id) {
         return registros.removeIf(registro -> registro.getId() == id);
     }
+public int getIdPersona() {
+    return this.idPersona;
+}
 
-    public int getIdPersona() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+public Timestamp getFechaHora() {
+    return this.fechaHora;
+}
 
-    public Timestamp getFechaHora() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+public String getTipoAcceso() {
+    return this.tipoAcceso;
+}
 
-    public String getTipoAcceso() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
 }
